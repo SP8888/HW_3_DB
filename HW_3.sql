@@ -26,6 +26,62 @@ CREATE TABLE type_content_like (
 	id_posts INT UNSIGNED NOT NULL
 );
 
+
+-- Привел в соответствие время создания и обновления
+
+show tables;
+
+SELECT * FROM users;
+
+UPDATE users SET updated_at = created_at WHERE updated_at < created_at;
+
+
+SELECT * FROM profiles;
+
+UPDATE profiles SET updated_at = created_at WHERE updated_at < created_at;
+
+SELECT * FROM friendship;
+
+UPDATE friendship SET requested_at = confirmed_at WHERE requested_at > confirmed_at ;
+
+SELECT * FROM likes;
+
+UPDATE likes SET updated_at = created_at WHERE updated_at < created_at;
+
+
+SELECT * FROM media;
+
+UPDATE media SET updated_at = created_at WHERE updated_at < created_at;
+
+SELECT * FROM posts ;
+
+UPDATE posts SET updated_at = created_at WHERE updated_at < created_at;
+
+-- Скорректировал типы статусов
+
+SELECT * FROM friendship_statuses;
+
+TRUNCATE friendship_statuses ;
+
+INSERT INTO friendship_statuses (name) VALUES
+  ('friend'),
+  ('enemy');
+ 
+ 
+ 
+SELECT * FROM media_types;
+
+TRUNCATE media_types ;
+
+INSERT INTO media_types (name) VALUES
+  ('audio'),
+  ('video'),
+  ('photo');
+
+ 
+ 
+ 
+ 
 -- Создаём таблицу пользователей
 CREATE TABLE users (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -130,33 +186,9 @@ CREATE TABLE posts (
   updated_at DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
--- Добавить необходимую таблицу/таблицы для того, 
--- чтобы можно было использовать лайки для медиафайлов, постов и пользователей.
-
-CREATE TABLE likes (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	author_id INT UNSIGNED NOT NULL,
-	id_type_content_like INT UNSIGNED NOT NULL, 
-  	created_at DATETIME DEFAULT NOW(),
- 	updated_at DATETIME DEFAULT NOW() ON UPDATE NOW()
-);
-
-CREATE TABLE type_content_like (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	id_media INT UNSIGNED NOT NULL,
-	id_users INT UNSIGNED NOT NULL,
-	id_posts INT UNSIGNED NOT NULL
-);
-
-
-
-use vk;
-show tables;
-DESC profiles ;
-
-SELECT * FROM users;
 
 
 
 
+ 
 
